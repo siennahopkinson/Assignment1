@@ -26,6 +26,8 @@ def merge_env_pmv(df_env, df_pmv, tolerance_minutes=30):
             with no environmental reading within the tolerance window
             will have missing (NaN) values in the environmental columns.
     """
+    # Drop PMV's original text date/time columns — they're redundant now that
+    # 'datetime' exists, and would otherwise collide with df_env's 'time' column.
     df_pmv_sorted = df_pmv.drop(columns=["date", "time"]).sort_values("datetime")
     df_env_sorted = df_env.sort_values("time")
     merged = pd.merge_asof(
@@ -48,6 +50,7 @@ def filter_overlap(merged, df_env):
         (pandas.DataFrame): Subset of merged rows which
           datetime column is within ENV data range
   """
+  # Env data is far sparser than PMV, so its date range defines the usable window.
   overlap_start = df_env["time"].min()
   overlap_end = df_env["time"].max()
   merged_overlap = merged[(merged["datetime"] >= overlap_start) & (merged["datetime"] <= overlap_end)]
