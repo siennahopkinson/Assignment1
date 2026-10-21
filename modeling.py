@@ -18,6 +18,7 @@ def chronological_split(model_data, train_fraction=0.8):
             earliest train_fraction of rows and the remaining, most
             recent rows, respectively.
     """
+    # Sorting by time first is what makes this a chronological (not random) split.
     model_data_sorted = model_data.sort_values("datetime")
     split_index = int(len(model_data_sorted) * train_fraction)
     train = model_data_sorted.iloc[:split_index]
