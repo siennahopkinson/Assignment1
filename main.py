@@ -22,6 +22,7 @@ PMV_FILEPATH = "PMV_07_25 - 04_26.csv"
 
 FEATURES = ["Pressure (mb)", "Temperature (°C)", "Humidity (RH %)", "CO2 (ppm)"]
 TARGET = "col7"
+# 'col7' holds the PMV value in the headerless source file — see load_pmv_data.
 
 
 def main():
